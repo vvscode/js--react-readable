@@ -12,7 +12,6 @@ export class Header extends Component {
       },
       ...this.props.categories
     ];
-    console.log(this.props.categories);
     return (
       <Menu>
         {list.map(i => (
@@ -25,11 +24,8 @@ export class Header extends Component {
   }
 }
 
-const mapStateToProps = ({ categories }) => {
-  debugger;
-  return {
-    categories
-  };
-};
+const mapStateToProps = ({ categories }) => ({
+  categories
+});
 
 export default connect(mapStateToProps)(Header);

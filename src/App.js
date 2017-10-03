@@ -12,8 +12,6 @@ import PostEditScreen from "./screens/PostEditScreen";
 import PostAddScreen from "./screens/PostAddScreen";
 import Header from "./components/Header";
 import { fetchCategories } from "./actions/categories";
-// import * as api from "./utils/api";
-// api.fetchCategories().then(console.log);
 
 export class App extends Component {
   componentWillMount() {
@@ -22,10 +20,10 @@ export class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <BrowserRouter>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
           <Switch>
-            <Header />
             <Route exact path="/" component={HomeScreen} />
             <Route
               exact
@@ -36,8 +34,8 @@ export class App extends Component {
             <Route exact path="/post/:postId" component={PostScreen} />
             <Route exact path="/post/:postId/edit" component={PostEditScreen} />
           </Switch>
-        </BrowserRouter>
-      </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }

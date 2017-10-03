@@ -8,5 +8,5 @@ export const fetchCategories = () =>
 
 export const fetchPosts = (category = null) => {
   const url = category ? `${category}/posts` : "/posts";
-  return fetch(getUrl(url)).then(resp => resp.json());
+  return fetch(getUrl(url), { headers }).then(resp => resp.json());
 };

@@ -1,5 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 
-const HomeScreen = () => <div>Home</div>;
+import PostsList from "../components/PostsList";
+
+class HomeScreen extends Component {
+  render() {
+    console.log(1);
+    return <PostsList />;
+  }
+}
 
 export default HomeScreen;
