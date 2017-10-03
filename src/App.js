@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -9,13 +10,22 @@ import CategoryScreen from "./screens/CategoryScreen";
 import PostScreen from "./screens/PostScreen";
 import PostEditScreen from "./screens/PostEditScreen";
 import PostAddScreen from "./screens/PostAddScreen";
+import Header from "./components/Header";
+import { fetchCategories } from "./actions/categories";
+// import * as api from "./utils/api";
+// api.fetchCategories().then(console.log);
 
-class App extends Component {
+export class App extends Component {
+  componentWillMount() {
+    this.props.dispatch(fetchCategories());
+  }
+
   render() {
     return (
       <div className="App">
         <BrowserRouter>
           <Switch>
+            <Header />
             <Route exact path="/" component={HomeScreen} />
             <Route
               exact
@@ -32,4 +42,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(App);
