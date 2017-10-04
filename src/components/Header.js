@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 
@@ -10,13 +10,16 @@ export class Header extends Component {
         name: "Home",
         path: "/"
       },
-      ...this.props.categories
+      ...this.props.categories.map(i => ({
+        ...i,
+        path: `/category/${i.path}`
+      }))
     ];
     return (
       <Menu>
         {list.map(i => (
           <Menu.Item key={i.path}>
-            <Link to={i.path}>{i.name}</Link>
+            <NavLink to={i.path}>{i.name}</NavLink>
           </Menu.Item>
         ))}
       </Menu>

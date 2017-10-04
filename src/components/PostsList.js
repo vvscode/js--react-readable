@@ -1,17 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Card } from "semantic-ui-react";
 
 import { fetchPosts } from "../actions/posts";
+import PostListItem from "./PostListItem";
 
 class PostsList extends Component {
-  componentWillMount() {
+  fetchCategoryPosts() {
     this.props.dispatch(fetchPosts(this.props.category));
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.category !== this.props.category) {
+      this.fetchCategoryPosts();
+    }
+  }
+  componentWillMount() {
+    this.fetchCategoryPosts();
   }
 
   render() {
-    const list = this.props.posts;
-    console.log(list);
-    return null;
+    return (
+      <Card.Group>
+        {this.props.posts.map(i => <PostListItem key={i.id} post={i} />)}
+      </Card.Group>
+    );
   }
 }
 

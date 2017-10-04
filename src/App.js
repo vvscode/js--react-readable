@@ -25,14 +25,10 @@ export class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={HomeScreen} />
-            <Route
-              exact
-              path="/category/:category"
-              component={CategoryScreen}
-            />
-            <Route exact path="/post/new" component={PostAddScreen} />
+            <Route path="/category/:category" component={CategoryScreen} />
+            <Route path="/post/new" component={PostAddScreen} />
             <Route exact path="/post/:postId" component={PostScreen} />
-            <Route exact path="/post/:postId/edit" component={PostEditScreen} />
+            <Route path="/post/:postId/edit" component={PostEditScreen} />
           </Switch>
         </div>
       </BrowserRouter>

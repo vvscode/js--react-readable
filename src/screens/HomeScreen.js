@@ -4,7 +4,6 @@ import PostsList from "../components/PostsList";
 
 class HomeScreen extends Component {
   render() {
-    console.log(1);
     return <PostsList />;
   }
 }

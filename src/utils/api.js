@@ -9,7 +9,7 @@ export const fetchCategories = () =>
   fetch(getUrl("/categories"), { headers }).then(resp => resp.json());
 
 export const fetchPosts = (category = null) => {
-  const url = category ? `${category}/posts` : "/posts";
+  const url = category ? `/${category}/posts` : "/posts";
   return fetch(getUrl(url), { headers }).then(resp => resp.json());
 };
 
@@ -23,7 +23,10 @@ export const createPost = ({
 }) =>
   fetch(getUrl("/posts"), {
     method: "POST",
-    headers,
+    headers: {
+      ...headers,
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       id,
       timestamp,
