@@ -13,6 +13,9 @@ export const fetchPosts = (category = null) => {
   return fetch(getUrl(url), { headers }).then(resp => resp.json());
 };
 
+export const fetchPost = id =>
+  fetch(getUrl(`/posts/${id}`), { headers }).then(resp => resp.json());
+
 export const createPost = ({
   id = uuid(),
   timestamp = Date.now(),
