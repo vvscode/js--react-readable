@@ -3,14 +3,18 @@ import { connect } from "react-redux";
 import { Container, Divider, Header } from "semantic-ui-react";
 
 import { fetchPost } from "../actions/posts";
+import { fetchCommentsByPostid } from "../actions/comments";
+import CommentsList from "../components/CommentsList";
 
 class PostScreen extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchPost(this.props.match.params.postId));
+    const { postId } = this.props.match.params;
+    this.props.dispatch(fetchPost(postId));
+    this.props.dispatch(fetchCommentsByPostid(postId));
   }
 
   render() {
-    const { post } = this.props;
+    const { post, comments } = this.props;
     return (
       <div>
         <Container textAlign="left">
@@ -28,14 +32,17 @@ class PostScreen extends Component {
           {(post.body || "")
             .split("\n")
             .map((i, index) => <p key={index}>{i}</p>)}
+          <Divider />
+          <CommentsList comments={comments} />
         </Container>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ activePost }) => ({
-  post: activePost
+const mapStateToProps = ({ activePost, activePostComments }) => ({
+  post: activePost,
+  comments: activePostComments
 });
 
 export default connect(mapStateToProps)(PostScreen);

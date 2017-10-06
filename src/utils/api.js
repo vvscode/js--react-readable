@@ -40,5 +40,8 @@ export const createPost = ({
     })
   }).then(resp => resp.json());
 
+export const fetchCommentsByPostid = id =>
+  fetch(getUrl(`/posts/${id}/comments`), { headers }).then(resp => resp.json());
+
 window.fetchPosts = fetchPosts;
 window.createPost = createPost;
