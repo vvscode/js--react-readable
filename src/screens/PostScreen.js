@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card } from "semantic-ui-react";
+import { Container, Divider, Header } from "semantic-ui-react";
 
 import { fetchPost } from "../actions/posts";
 
@@ -12,14 +12,24 @@ class PostScreen extends Component {
   render() {
     const { post } = this.props;
     return (
-      <Card>
-        <Card.Content>
-          <Card.Header>{post.title}</Card.Header>
-          <Card.Meta>{post.author}</Card.Meta>
-          <Card.Description>{post.body}</Card.Description>
-          <Card.Meta>{post.category}</Card.Meta>
-        </Card.Content>
-      </Card>
+      <div>
+        <Container textAlign="left">
+          <i>{post.category}</i>
+        </Container>
+        <Container textAlign="center">
+          <Header as="h1">{post.title}</Header>
+        </Container>
+        <Container textAlign="right">
+          (c) <strong>{post.author}</strong>
+        </Container>
+        <Container textAlign="justified">
+          <Divider />
+
+          {(post.body || "")
+            .split("\n")
+            .map((i, index) => <p key={index}>{i}</p>)}
+        </Container>
+      </div>
     );
   }
 }
