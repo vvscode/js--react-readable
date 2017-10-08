@@ -6,7 +6,7 @@ const CategoryScreen = ({ match }) => {
   return (
     <div>
       <h1>{category}</h1>
-      <PostsList category={category} />;
+      <PostsList category={category} />
     </div>
   );
 };
