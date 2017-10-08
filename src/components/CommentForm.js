@@ -22,7 +22,7 @@ class CommentForm extends Component {
 
   render() {
     return (
-      <Form ref="form" onSubmit={this.onSubmit}>
+      <Form method="post" onSubmit={this.onSubmit}>
         <Form.Field>
           <label>Author</label>
           <input

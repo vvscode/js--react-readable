@@ -15,12 +15,13 @@ class PostScreen extends Component {
   }
 
   onCommentSubmit = commentData => {
-    this.props.dispatch(
-      addComment({
-        postId: this.props.match.params.postId,
-        ...commentData
-      })
-    );
+    commentData.body &&
+      this.props.dispatch(
+        addComment({
+          postId: this.props.match.params.postId,
+          ...commentData
+        })
+      );
   };
 
   render() {

@@ -1,5 +1,6 @@
 import React from "react";
 import { Comment, Header } from "semantic-ui-react";
+import Moment from "react-moment";
 
 const CommentsList = ({ comments = [] }) => {
   if (!comments.length) {
@@ -16,7 +17,7 @@ const CommentsList = ({ comments = [] }) => {
           <Comment.Content>
             <Comment.Author as="span">{i.author}</Comment.Author>
             <Comment.Metadata>
-              <div>{i.timestamp}</div>
+              <Moment fromNow>{i.timestamp}</Moment>
             </Comment.Metadata>
             <Comment.Text>{i.body}</Comment.Text>
           </Comment.Content>
