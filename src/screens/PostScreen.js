@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { Container, Divider, Header } from "semantic-ui-react";
 
 import { fetchPost } from "../actions/posts";
-import { fetchCommentsByPostid } from "../actions/comments";
+import { fetchCommentsByPostid, addComment } from "../actions/comments";
 import CommentsList from "../components/CommentsList";
+import CommentForm from "../components/CommentForm";
 
 class PostScreen extends Component {
   componentWillMount() {
@@ -12,6 +13,15 @@ class PostScreen extends Component {
     this.props.dispatch(fetchPost(postId));
     this.props.dispatch(fetchCommentsByPostid(postId));
   }
+
+  onCommentSubmit = commentData => {
+    this.props.dispatch(
+      addComment({
+        postId: this.props.match.params.postId,
+        ...commentData
+      })
+    );
+  };
 
   render() {
     const { post, comments } = this.props;
@@ -32,8 +42,10 @@ class PostScreen extends Component {
           {(post.body || "")
             .split("\n")
             .map((i, index) => <p key={index}>{i}</p>)}
-          <Divider />
+          {comments.length ? <Divider /> : null}
           <CommentsList comments={comments} />
+          <Divider />
+          <CommentForm onSubmit={this.onCommentSubmit} />
         </Container>
       </div>
     );

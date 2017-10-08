@@ -43,5 +43,18 @@ export const createPost = ({
 export const fetchCommentsByPostid = id =>
   fetch(getUrl(`/posts/${id}/comments`), { headers }).then(resp => resp.json());
 
-window.fetchPosts = fetchPosts;
-window.createPost = createPost;
+export const addComment = ({ postId, author, body }) =>
+  fetch(getUrl("/comments"), {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id: uuid(),
+      timestamp: Date.now(),
+      parentId: postId,
+      author,
+      body
+    })
+  }).then(resp => resp.json());
