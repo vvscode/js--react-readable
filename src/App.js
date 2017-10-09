@@ -26,7 +26,7 @@ export class App extends Component {
           <Switch>
             <Route exact path="/" component={HomeScreen} />
             <Route path="/category/:category" component={CategoryScreen} />
-            <Route path="/post/new" component={PostAddScreen} />
+            <Route exact path="/post/new" component={PostAddScreen} />
             <Route exact path="/post/:postId" component={PostScreen} />
             <Route path="/post/:postId/edit" component={PostEditScreen} />
           </Switch>
