@@ -1,0 +1,7 @@
+.header.postTitle .editIcon {
+  display: none;
+}
+
+.postTitle:hover .editIcon {
+  display: initial;
+}

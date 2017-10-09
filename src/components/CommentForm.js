@@ -2,32 +2,33 @@ import React, { Component } from "react";
 import { Form, Button } from "semantic-ui-react";
 
 class CommentForm extends Component {
-  constructor(props) {
-    super(props);
-    const { author = "John Doe", body = "Thx for your job" } = props;
-    this.state = {
-      author,
-      body
-    };
-  }
+  state = {};
 
   onSubmit = ev => {
     ev.preventDefault();
-    const { author, body } = this.state;
+    const { author, body } = {
+      ...this.props,
+      ...this.state
+    };
     this.props.onSubmit && this.props.onSubmit({ author, body });
     this.setState({ body: "" });
   };
 
-  onChange = field => ev => this.setState({ [field]: ev.target.valu });
+  onChange = field => ev => this.setState({ [field]: ev.target.value });
 
   render() {
+    const { author, body } = {
+      ...this.props,
+      ...this.state
+    };
     return (
       <Form method="post" onSubmit={this.onSubmit}>
         <Form.Field>
           <label>Author</label>
           <input
             placeholder="Author"
-            value={this.state.author}
+            value={author}
+            required
             onChange={this.onChange("author")}
           />
         </Form.Field>
@@ -35,7 +36,8 @@ class CommentForm extends Component {
           <label>Comment</label>
           <textarea
             name="body"
-            value={this.state.body}
+            required
+            value={body}
             onChange={this.onChange("body")}
           />
         </Form.Field>

@@ -6,26 +6,13 @@ export class PostForm extends Component {
   state = {
     categories: []
   };
-  constructor(props) {
-    super(props);
-
-    const { category, author, body, title } = props;
-    this.state = {
-      category,
-      author,
-      body,
-      title
-    };
-  }
 
   onSubmit = ev => {
     ev.preventDefault();
-    const {
-      category = this.getDefaultCategory(),
-      author,
-      body,
-      title
-    } = this.state;
+    const { category = this.getDefaultCategory(), author, body, title } = {
+      ...this.props,
+      ...this.state
+    };
     this.props.onSubmit &&
       this.props.onSubmit({ category, author, body, title });
   };
@@ -45,43 +32,44 @@ export class PostForm extends Component {
       value: name,
       text: name
     }));
-    const category = this.state.category || this.getDefaultCategory();
+    const isEditMode = !!this.props.id;
+    let { author, title, body, category } = { ...this.props, ...this.state };
+    category = category || this.getDefaultCategory();
+    const onChange = this.onChange;
     return (
       <Form method="post" onSubmit={this.onSubmit}>
         <Form.Field>
           <label>Author</label>
           <input
             placeholder="Author"
-            value={this.state.author}
-            onChange={this.onChange("author")}
+            disabled={isEditMode}
+            value={author}
+            onChange={onChange("author")}
           />
         </Form.Field>
         <Form.Field>
           <label>Category</label>
           <Select
+            disabled={isEditMode}
             value={category}
             placeholder="Select category"
             options={categories}
-            onChange={this.onChange("category")}
+            onChange={onChange("category")}
           />
         </Form.Field>
         <Form.Field>
           <label>Title</label>
           <input
             placeholder="Title"
-            value={this.state.title}
-            onChange={this.onChange("title")}
+            value={title}
+            onChange={onChange("title")}
           />
         </Form.Field>
         <Form.Field>
           <label>Post</label>
-          <textarea
-            name="body"
-            value={this.state.body}
-            onChange={this.onChange("body")}
-          />
+          <textarea name="body" value={body} onChange={onChange("body")} />
         </Form.Field>
-        <Button>Post</Button>
+        <Button>{isEditMode ? "Save" : "Post"}</Button>
       </Form>
     );
   }

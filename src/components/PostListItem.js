@@ -6,7 +6,7 @@ const PostListItem = ({ post }) => (
   <Card>
     <Card.Content>
       <Card.Header>
-        <Link to={`/post/${post.id}`}>{post.title}</Link>
+        <Link to={`/post/${post.id}`}>{post.title || "Untitled post"}</Link>
       </Card.Header>
       <Card.Meta>{post.author}</Card.Meta>
       <Card.Description>{post.body}</Card.Description>

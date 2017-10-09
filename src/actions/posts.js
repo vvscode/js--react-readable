@@ -3,6 +3,7 @@ import * as api from "../utils/api";
 export const POSTS_FETCH = "POSTS_FETCH";
 export const POSTS_FETCH_POST = "POSTS_FETCH_POST";
 export const POSTS_ADD = "POSTS_ADD";
+export const POST_UPDATE = "POST_UPDATE";
 
 export const fetchPosts = (category = null) => dispatch =>
   api.fetchPosts(category).then(posts =>
@@ -35,3 +36,11 @@ export const addPost = ({ author, title, category, body }) => dispatch =>
         post
       })
     );
+
+export const updatePost = ({ postId, title, body }) => dispatch =>
+  api.updatePost({ postId, title, body }).then(post =>
+    dispatch({
+      type: POST_UPDATE,
+      post
+    })
+  );

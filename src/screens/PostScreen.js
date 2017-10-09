@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Container, Divider, Header } from "semantic-ui-react";
+import { Container, Divider, Header, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 import { fetchPost } from "../actions/posts";
 import { fetchCommentsByPostid, addComment } from "../actions/comments";
 import CommentsList from "../components/CommentsList";
 import CommentForm from "../components/CommentForm";
+
+import "./PostScreen.css";
 
 class PostScreen extends Component {
   componentWillMount() {
@@ -32,7 +35,14 @@ class PostScreen extends Component {
           <i>{post.category}</i>
         </Container>
         <Container textAlign="center">
-          <Header as="h1">{post.title}</Header>
+          <Header as="h1" className="postTitle">
+            {post.title}
+            <sup>
+              <Link to={`/post/${post.id}/edit`} className="editIcon">
+                <Icon name="write" size="small" />
+              </Link>
+            </sup>
+          </Header>
         </Container>
         <Container textAlign="right">
           (c) <strong>{post.author}</strong>
