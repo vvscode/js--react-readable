@@ -37,7 +37,7 @@ export class PostForm extends Component {
     return null;
   }
 
-  onChange = field => ev => this.setState({ [field]: ev.target.valu });
+  onChange = field => ev => this.setState({ [field]: ev.target.value });
 
   render() {
     const categories = this.props.categories.map(({ name }) => ({
