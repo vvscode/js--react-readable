@@ -12,7 +12,7 @@ export class Header extends Component {
       },
       ...this.props.categories.map(i => ({
         ...i,
-        path: `/category/${i.path}`
+        path: `/${i.path}`
       }))
     ];
     return (

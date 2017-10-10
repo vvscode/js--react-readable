@@ -38,7 +38,10 @@ class PostScreen extends Component {
           <Header as="h1" className="postTitle">
             {post.title}
             <sup>
-              <Link to={`/post/${post.id}/edit`} className="editIcon">
+              <Link
+                to={`/${post.category}/${post.id}/edit`}
+                className="editIcon"
+              >
                 <Icon name="write" size="small" />
               </Link>
             </sup>

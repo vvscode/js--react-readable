@@ -6,12 +6,12 @@ import { fetchPosts } from "../actions/posts";
 import PostListItem from "./PostListItem";
 
 class PostsList extends Component {
-  fetchCategoryPosts() {
-    this.props.dispatch(fetchPosts(this.props.category));
+  fetchCategoryPosts(props = this.props) {
+    this.props.dispatch(fetchPosts(props.category));
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.category !== this.props.category) {
-      this.fetchCategoryPosts();
+      this.fetchCategoryPosts(nextProps);
     }
   }
   componentWillMount() {
