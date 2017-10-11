@@ -1,8 +1,8 @@
 import React from "react";
-import { Comment, Header } from "semantic-ui-react";
+import { Comment, Header, Icon } from "semantic-ui-react";
 import Moment from "react-moment";
 
-const CommentsList = ({ comments = [] }) => {
+const CommentsList = ({ comments = [], voteAction }) => {
   if (!comments.length) {
     return null;
   }
@@ -18,6 +18,18 @@ const CommentsList = ({ comments = [] }) => {
             <Comment.Author as="span">{i.author}</Comment.Author>
             <Comment.Metadata>
               <Moment fromNow>{i.timestamp}</Moment>
+              |{" "}
+              <Icon
+                name="dislike outline"
+                className="voteButton"
+                onClick={() => voteAction(i.id, -1)}
+              />
+              {i.voteScore}
+              <Icon
+                name="like outline"
+                className="voteButton"
+                onClick={() => voteAction(i.id, 1)}
+              />
             </Comment.Metadata>
             <Comment.Text>{i.body}</Comment.Text>
           </Comment.Content>

@@ -4,6 +4,7 @@ import { Container, Divider, Header, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { fetchPost, votePost } from "../actions/posts";
+import { voteComment } from "../actions/comments";
 import { fetchCommentsByPostid, addComment } from "../actions/comments";
 import CommentsList from "../components/CommentsList";
 import CommentForm from "../components/CommentForm";
@@ -30,6 +31,10 @@ class PostScreen extends Component {
   voteAction = delta => {
     const postId = this.props.post.id;
     this.props.dispatch(votePost({ postId, delta }));
+  };
+
+  voteComment = (commentId, delta) => {
+    this.props.dispatch(voteComment({ commentId, delta }));
   };
 
   render() {
@@ -75,7 +80,7 @@ class PostScreen extends Component {
               onClick={() => this.voteAction(1)}
             />
           </div>
-          <CommentsList comments={comments} />
+          <CommentsList comments={comments} voteAction={this.voteComment} />
           <Divider />
           <CommentForm onSubmit={this.onCommentSubmit} />
         </Container>
@@ -84,11 +89,10 @@ class PostScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ posts, activePost, activePostComments }) => {
-  console.log("mapStateToProps");
+const mapStateToProps = ({ posts, activePost, comments }) => {
   return {
     post: posts.find(i => i.id === activePost.id) || activePost,
-    comments: activePostComments
+    comments: comments[activePost.id] || []
   };
 };
 

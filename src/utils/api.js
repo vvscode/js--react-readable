@@ -78,8 +78,8 @@ export const deletePost = postId =>
     headers
   }).then(resp => resp.json());
 
-export const voteComment = ({ commentId, mark }) => {
-  let option = +mark > 0 ? "upVote" : "downVote";
+export const voteComment = ({ commentId, delta }) => {
+  let option = +delta > 0 ? "upVote" : "downVote";
   return fetch(getUrl(`/comments/${commentId}`), {
     method: "POST",
     headers,
