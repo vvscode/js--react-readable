@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Container, Divider, Header, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-import { fetchPost, votePost } from "../actions/posts";
+import { fetchPost, votePost, deletePost } from "../actions/posts";
 import { voteComment } from "../actions/comments";
 import {
   fetchCommentsByPostid,
@@ -45,6 +45,13 @@ class PostScreen extends Component {
     this.props.dispatch(deleteComment(commentId));
   };
 
+  deletePost = () => {
+    if (window.confirm("Are you sure you want to delete post?")) {
+      this.props.dispatch(deletePost(this.props.post.id));
+      this.props.history.push(`/${this.props.post.category}`);
+    }
+  };
+
   render() {
     const { post, comments } = this.props;
     return (
@@ -54,14 +61,12 @@ class PostScreen extends Component {
         </Container>
         <Container textAlign="center">
           <Header as="h1" className="postTitle">
-            {post.title}
-            <sup>
-              <Link
-                to={`/${post.category}/${post.id}/edit`}
-                className="editIcon"
-              >
+            {post.title || "Untitled Post"}
+            <sup className="controlPostButtons">
+              <Link to={`/${post.category}/${post.id}/edit`}>
                 <Icon name="write" size="small" />
               </Link>
+              <Icon name="delete" onClick={this.deletePost} />
             </sup>
           </Header>
         </Container>

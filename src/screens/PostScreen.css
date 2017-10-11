@@ -1,7 +1,11 @@
-.header.postTitle .editIcon {
+.header.postTitle .controlPostButtons {
   display: none;
 }
 
-.postTitle:hover .editIcon {
+.postTitle:hover .controlPostButtons {
   display: initial;
+}
+
+.controlPostButtons .icon {
+  cursor: pointer;
 }
