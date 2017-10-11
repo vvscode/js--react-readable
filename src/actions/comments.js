@@ -23,6 +23,14 @@ export const addComment = ({ postId, author, body }) => dispatch =>
     })
   );
 
+export const updateComment = ({ commentId, body }) => dispatch =>
+  api.updateComment({ commentId, body }).then(comment =>
+    dispatch({
+      type: COMMENTS_UPDATE_COMMENT,
+      comment
+    })
+  );
+
 export const voteComment = ({ commentId, delta }) => dispatch =>
   api.voteComment({ commentId, delta }).then(comment =>
     dispatch({

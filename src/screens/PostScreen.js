@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Container, Divider, Header, Icon } from "semantic-ui-react";
+import { Container, Divider, Header, Icon, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { fetchPost, votePost, deletePost } from "../actions/posts";
@@ -8,6 +8,7 @@ import { voteComment } from "../actions/comments";
 import {
   fetchCommentsByPostid,
   addComment,
+  updateComment,
   deleteComment
 } from "../actions/comments";
 import CommentsList from "../components/CommentsList";
@@ -16,6 +17,10 @@ import CommentForm from "../components/CommentForm";
 import "./PostScreen.css";
 
 class PostScreen extends Component {
+  state = {
+    commentModalOpen: false,
+    commentToEdit: null
+  };
   componentWillMount() {
     const { postId } = this.props.match.params;
     this.props.dispatch(fetchPost(postId));
@@ -30,6 +35,19 @@ class PostScreen extends Component {
           ...commentData
         })
       );
+  };
+
+  onCommentUpdate = ({ body }) => {
+    if (!body) {
+      return;
+    }
+    this.props.dispatch(
+      updateComment({
+        commentId: this.state.commentToEdit.id,
+        body
+      })
+    );
+    this.closeCommentModal();
   };
 
   voteAction = delta => {
@@ -51,6 +69,18 @@ class PostScreen extends Component {
       this.props.history.push(`/${this.props.post.category}`);
     }
   };
+
+  closeCommentModal = () =>
+    this.setState({
+      commentModalOpen: false,
+      commentToEdit: null
+    });
+
+  editComment = comment =>
+    this.setState({
+      commentModalOpen: true,
+      commentToEdit: comment
+    });
 
   render() {
     const { post, comments } = this.props;
@@ -97,10 +127,24 @@ class PostScreen extends Component {
             comments={comments}
             voteAction={this.voteComment}
             removeAction={this.removeComment}
+            editAction={this.editComment}
           />
           <Divider />
           <CommentForm onSubmit={this.onCommentSubmit} />
         </Container>
+        <Modal
+          size={"tiny"}
+          open={this.state.commentModalOpen}
+          onClose={this.closeCommentModal}
+        >
+          <Modal.Header>Edit comment</Modal.Header>
+          <Modal.Content>
+            <CommentForm
+              {...this.state.commentToEdit}
+              onSubmit={this.onCommentUpdate}
+            />
+          </Modal.Content>
+        </Modal>
       </div>
     );
   }

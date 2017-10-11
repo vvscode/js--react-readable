@@ -17,7 +17,7 @@ class CommentForm extends Component {
   onChange = field => ev => this.setState({ [field]: ev.target.value });
 
   render() {
-    const { author, body } = {
+    const { author, body, id } = {
       ...this.props,
       ...this.state
     };
@@ -28,6 +28,7 @@ class CommentForm extends Component {
           <input
             placeholder="Author"
             value={author}
+            disabled={!!id}
             required
             onChange={this.onChange("author")}
           />
