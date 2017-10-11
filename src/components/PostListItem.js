@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import "./PostListItem.css";
 
+const BODY_PREVIEW_LIMIT = 100;
+
 const PostListItem = ({
   post,
   commentsCount,
@@ -23,7 +25,11 @@ const PostListItem = ({
         </div>
       </Card.Header>
       <Card.Meta>{post.author}</Card.Meta>
-      <Card.Description>{post.body}</Card.Description>
+      <Card.Description className="postBody">
+        {post.body.length > BODY_PREVIEW_LIMIT
+          ? `${post.body.substr(0, BODY_PREVIEW_LIMIT)}...`
+          : post.body}
+      </Card.Description>
       <Card.Meta>
         {post.category}
         {!!commentsCount &&
