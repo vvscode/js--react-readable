@@ -56,8 +56,8 @@ export const addComment = ({ postId, author, body }) =>
     })
   }).then(resp => resp.json());
 
-export const votePost = ({ postId, mark }) => {
-  let option = +mark > 0 ? "upVote" : "downVote";
+export const votePost = ({ postId, delta }) => {
+  let option = +delta > 0 ? "upVote" : "downVote";
   return fetch(getUrl(`/posts/${postId}`), {
     method: "POST",
     headers,

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Card } from "semantic-ui-react";
 
-import { fetchPosts } from "../actions/posts";
+import { fetchPosts, votePost } from "../actions/posts";
 import PostListItem from "./PostListItem";
 
 class PostsList extends Component {
@@ -18,6 +18,10 @@ class PostsList extends Component {
     this.fetchCategoryPosts();
   }
 
+  voteAction = (postId, delta) => {
+    this.props.dispatch(votePost({ postId, delta }));
+  };
+
   render() {
     const { posts, comments } = this.props;
     return (
@@ -27,6 +31,7 @@ class PostsList extends Component {
             key={i.id}
             post={i}
             commentsCount={(comments[i.id] || []).length}
+            voteAction={this.voteAction}
           />
         ))}
       </Card.Group>

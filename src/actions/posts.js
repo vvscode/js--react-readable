@@ -53,3 +53,11 @@ export const updatePost = ({ postId, title, body }) => dispatch =>
       post
     })
   );
+
+export const votePost = ({ postId, delta }) => dispatch =>
+  api.votePost({ postId, delta }).then(post =>
+    dispatch({
+      type: POST_UPDATE,
+      post
+    })
+  );
