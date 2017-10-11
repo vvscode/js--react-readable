@@ -55,8 +55,7 @@ class PostsList extends Component {
 const mapStateToProps = ({ posts, comments, sortOrder }) => {
   return {
     posts: sortBy(posts, sortOrder),
-    comments,
-    sortOrder
+    comments
   };
 };
 
