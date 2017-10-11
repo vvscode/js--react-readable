@@ -10,6 +10,7 @@ const CategoryScreen = ({ match }) => {
       <div>
         <SortControls />
       </div>
+      <hr />
       <PostsList category={category} />
     </div>
   );

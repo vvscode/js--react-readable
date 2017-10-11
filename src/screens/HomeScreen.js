@@ -11,6 +11,7 @@ class HomeScreen extends Component {
         <div>
           <SortControls />
         </div>
+        <hr />
         <PostsList />
       </div>
     );
