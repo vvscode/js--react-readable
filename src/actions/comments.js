@@ -7,7 +7,8 @@ export const fetchCommentsByPostid = (postId = null) => dispatch =>
   api.fetchCommentsByPostid(postId).then(comments =>
     dispatch({
       type: COMMENTS_FETCH_BY_POST_ID,
-      comments
+      comments,
+      postId
     })
   );
 
@@ -15,6 +16,7 @@ export const addComment = ({ postId, author, body }) => dispatch =>
   api.addComment({ postId, author, body }).then(comment =>
     dispatch({
       type: COMMENTS_ADD_COMMENT,
-      comment
+      comment,
+      postId
     })
   );

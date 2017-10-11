@@ -19,16 +19,26 @@ class PostsList extends Component {
   }
 
   render() {
+    const { posts, comments } = this.props;
     return (
       <Card.Group>
-        {this.props.posts.map(i => <PostListItem key={i.id} post={i} />)}
+        {posts.map(i => (
+          <PostListItem
+            key={i.id}
+            post={i}
+            commentsCount={(comments[i.id] || []).length}
+          />
+        ))}
       </Card.Group>
     );
   }
 }
 
-const mapStateToProps = ({ posts }) => ({
-  posts
-});
+const mapStateToProps = ({ posts, comments }) => {
+  return {
+    posts,
+    comments
+  };
+};
 
 export default connect(mapStateToProps)(PostsList);

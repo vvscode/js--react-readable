@@ -9,7 +9,7 @@ const CommentsList = ({ comments = [] }) => {
   return (
     <Comment.Group>
       <Header as="h3" dividing>
-        Comments:
+        {comments.length} {comments.length === 1 ? "Comment" : "Comments"}:
       </Header>
 
       {comments.map(i => (

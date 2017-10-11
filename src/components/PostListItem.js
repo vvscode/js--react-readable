@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const PostListItem = ({ post }) => (
+const PostListItem = ({ post, commentsCount }) => (
   <Card>
     <Card.Content>
       <Card.Header>
@@ -12,7 +12,13 @@ const PostListItem = ({ post }) => (
       </Card.Header>
       <Card.Meta>{post.author}</Card.Meta>
       <Card.Description>{post.body}</Card.Description>
-      <Card.Meta>{post.category}</Card.Meta>
+      <Card.Meta>
+        {post.category}
+        {!!commentsCount &&
+          ` ( ${commentsCount} ${commentsCount === 1
+            ? "comment"
+            : "comments"} )`}
+      </Card.Meta>
     </Card.Content>
   </Card>
 );
