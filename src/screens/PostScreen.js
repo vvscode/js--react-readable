@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Container, Divider, Header, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-import { fetchPost } from "../actions/posts";
+import { fetchPost, votePost } from "../actions/posts";
 import { fetchCommentsByPostid, addComment } from "../actions/comments";
 import CommentsList from "../components/CommentsList";
 import CommentForm from "../components/CommentForm";
@@ -25,6 +25,11 @@ class PostScreen extends Component {
           ...commentData
         })
       );
+  };
+
+  voteAction = delta => {
+    const postId = this.props.post.id;
+    this.props.dispatch(votePost({ postId, delta }));
   };
 
   render() {
@@ -57,6 +62,19 @@ class PostScreen extends Component {
             .split("\n")
             .map((i, index) => <p key={index}>{i}</p>)}
           {comments.length ? <Divider /> : null}
+          <div>
+            <Icon
+              name="dislike outline"
+              className="voteButton"
+              onClick={() => this.voteAction(-1)}
+            />
+            {post.voteScore}
+            <Icon
+              name="like outline"
+              className="voteButton"
+              onClick={() => this.voteAction(1)}
+            />
+          </div>
           <CommentsList comments={comments} />
           <Divider />
           <CommentForm onSubmit={this.onCommentSubmit} />
@@ -66,9 +84,12 @@ class PostScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ activePost, activePostComments }) => ({
-  post: activePost,
-  comments: activePostComments
-});
+const mapStateToProps = ({ posts, activePost, activePostComments }) => {
+  console.log("mapStateToProps");
+  return {
+    post: posts.find(i => i.id === activePost.id) || activePost,
+    comments: activePostComments
+  };
+};
 
 export default connect(mapStateToProps)(PostScreen);

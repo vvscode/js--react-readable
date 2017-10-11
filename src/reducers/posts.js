@@ -1,4 +1,9 @@
-import { POSTS_FETCH, POSTS_ADD, POST_UPDATE } from "../actions/posts";
+import {
+  POSTS_FETCH,
+  POSTS_ADD,
+  POST_UPDATE,
+  POSTS_FETCH_POST
+} from "../actions/posts";
 
 const inintialState = [];
 
@@ -8,6 +13,11 @@ export default (state = inintialState, action) => {
       return action.posts;
     }
     case POSTS_ADD: {
+      return state.find(i => i.id === action.post.id)
+        ? [...state]
+        : [action.post, ...state];
+    }
+    case POSTS_FETCH_POST: {
       return state.find(i => i.id === action.post.id)
         ? [...state]
         : [action.post, ...state];
