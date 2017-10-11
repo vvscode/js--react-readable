@@ -22,6 +22,7 @@ export class Header extends Component {
             <NavLink to={i.path}>{i.name}</NavLink>
           </Menu.Item>
         ))}
+        <Menu.Menu position="right" />
         <Menu.Menu position="right">
           <Menu.Item>
             <NavLink to="/post/new">New Post</NavLink>

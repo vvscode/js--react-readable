@@ -5,6 +5,7 @@ import { Card } from "semantic-ui-react";
 
 import { fetchPosts, votePost, deletePost } from "../actions/posts";
 import PostListItem from "./PostListItem";
+import sortBy from "../utils/sortBy";
 
 class PostsList extends Component {
   fetchCategoryPosts(props = this.props) {
@@ -51,10 +52,11 @@ class PostsList extends Component {
   }
 }
 
-const mapStateToProps = ({ posts, comments }) => {
+const mapStateToProps = ({ posts, comments, sortOrder }) => {
   return {
-    posts,
-    comments
+    posts: sortBy(posts, sortOrder),
+    comments,
+    sortOrder
   };
 };
 
