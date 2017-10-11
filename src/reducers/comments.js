@@ -1,7 +1,8 @@
 import {
   COMMENTS_FETCH_BY_POST_ID,
   COMMENTS_ADD_COMMENT,
-  COMMENTS_UPDATE_COMMENT
+  COMMENTS_UPDATE_COMMENT,
+  COMMENTS_DELETE_COMMENTS
 } from "../actions/comments";
 
 const inintialState = {};
@@ -27,6 +28,15 @@ export default (state = inintialState, action) => {
       return {
         ...state,
         [action.postId]: [...(state[action.postId] || []), action.comment]
+      };
+    }
+    case COMMENTS_DELETE_COMMENTS: {
+      const { comment } = action;
+      const { parentId, id } = comment;
+      const comments = state[parentId] || [];
+      return {
+        ...state,
+        [parentId]: comments.filter(i => i.id !== id)
       };
     }
     default: {

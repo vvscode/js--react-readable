@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 
 import { fetchPost, votePost } from "../actions/posts";
 import { voteComment } from "../actions/comments";
-import { fetchCommentsByPostid, addComment } from "../actions/comments";
+import {
+  fetchCommentsByPostid,
+  addComment,
+  deleteComment
+} from "../actions/comments";
 import CommentsList from "../components/CommentsList";
 import CommentForm from "../components/CommentForm";
 
@@ -35,6 +39,10 @@ class PostScreen extends Component {
 
   voteComment = (commentId, delta) => {
     this.props.dispatch(voteComment({ commentId, delta }));
+  };
+
+  removeComment = commentId => {
+    this.props.dispatch(deleteComment(commentId));
   };
 
   render() {
@@ -73,14 +81,18 @@ class PostScreen extends Component {
               className="voteButton"
               onClick={() => this.voteAction(-1)}
             />
-            {post.voteScore}
+            <span>{post.voteScore} </span>
             <Icon
               name="like outline"
               className="voteButton"
               onClick={() => this.voteAction(1)}
             />
           </div>
-          <CommentsList comments={comments} voteAction={this.voteComment} />
+          <CommentsList
+            comments={comments}
+            voteAction={this.voteComment}
+            removeAction={this.removeComment}
+          />
           <Divider />
           <CommentForm onSubmit={this.onCommentSubmit} />
         </Container>

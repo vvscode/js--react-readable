@@ -30,3 +30,12 @@
 .voteButton:hover {
   cursor: pointer;
 }
+
+.removeButton {
+  visibility: hidden;
+  cursor: pointer;
+}
+
+*:hover > .removeButton {
+  visibility: visible;
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { Comment, Header, Icon } from "semantic-ui-react";
 import Moment from "react-moment";
 
-const CommentsList = ({ comments = [], voteAction }) => {
+const CommentsList = ({ comments = [], voteAction, removeAction }) => {
   if (!comments.length) {
     return null;
   }
@@ -29,6 +29,12 @@ const CommentsList = ({ comments = [], voteAction }) => {
                 name="like outline"
                 className="voteButton"
                 onClick={() => voteAction(i.id, 1)}
+              />
+              |
+              <Icon
+                name="remove"
+                className="removeButton"
+                onClick={() => removeAction(i.id)}
               />
             </Comment.Metadata>
             <Comment.Text>{i.body}</Comment.Text>
