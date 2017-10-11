@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import { Card } from "semantic-ui-react";
 
-import { fetchPosts, votePost } from "../actions/posts";
+import { fetchPosts, votePost, deletePost } from "../actions/posts";
 import PostListItem from "./PostListItem";
 
 class PostsList extends Component {
@@ -22,6 +23,15 @@ class PostsList extends Component {
     this.props.dispatch(votePost({ postId, delta }));
   };
 
+  editPost = post => {
+    this.props.history.push(`/${post.category}/${post.id}/edit`);
+  };
+
+  deletePost = postId => {
+    window.confirm("Are you sure you want to remove the post?") &&
+      this.props.dispatch(deletePost(postId));
+  };
+
   render() {
     const { posts, comments } = this.props;
     return (
@@ -32,6 +42,8 @@ class PostsList extends Component {
             post={i}
             commentsCount={(comments[i.id] || []).length}
             voteAction={this.voteAction}
+            editAction={this.editPost}
+            deleteAction={this.deletePost}
           />
         ))}
       </Card.Group>
@@ -46,4 +58,4 @@ const mapStateToProps = ({ posts, comments }) => {
   };
 };
 
-export default connect(mapStateToProps)(PostsList);
+export default withRouter(connect(mapStateToProps)(PostsList));

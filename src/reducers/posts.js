@@ -2,7 +2,8 @@ import {
   POSTS_FETCH,
   POSTS_ADD,
   POST_UPDATE,
-  POSTS_FETCH_POST
+  POSTS_FETCH_POST,
+  POST_DELETE
 } from "../actions/posts";
 
 const inintialState = [];
@@ -33,6 +34,10 @@ export default (state = inintialState, action) => {
               }
             : i
       );
+    }
+    case POST_DELETE: {
+      const post = action.post;
+      return state.filter(i => i.id !== post.id);
     }
     default: {
       return state;

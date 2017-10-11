@@ -1,0 +1,15 @@
+.controlButtons {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: lightgray;
+}
+
+*:hover > .controlButtons {
+  display: block;
+}
+
+.controlButtons > .icon {
+  cursor: pointer;
+}

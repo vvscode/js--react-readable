@@ -2,13 +2,25 @@ import React from "react";
 import { Card, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const PostListItem = ({ post, commentsCount, voteAction }) => (
+import "./PostListItem.css";
+
+const PostListItem = ({
+  post,
+  commentsCount,
+  voteAction,
+  editAction,
+  deleteAction
+}) => (
   <Card>
     <Card.Content>
       <Card.Header>
         <Link to={`/${post.category}/${post.id}`}>
           {post.title || "Untitled post"}
         </Link>
+        <div className="controlButtons">
+          <Icon name="edit" onClick={() => editAction(post)} />
+          <Icon name="delete" onClick={() => deleteAction(post.id)} />
+        </div>
       </Card.Header>
       <Card.Meta>{post.author}</Card.Meta>
       <Card.Description>{post.body}</Card.Description>
