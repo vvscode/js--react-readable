@@ -32,25 +32,29 @@ class SortControls extends Component {
     const { sortOrder } = this.props;
 
     return (
-      <div className="sortControls">
-        {sortings.map(i => {
-          const upChevron = sortOrder === i.field;
-          const downChevron = sortOrder === `-${i.field}`;
-          const chevron = upChevron ? "up" : "down";
-          return (
-            <Button
-              active={upChevron || downChevron}
-              onClick={() => this.changeSorting(i.field)}
-              className="sortingButton"
-              key={i.field}
-            >
-              {i.title}
-              {upChevron || downChevron ? (
-                <Icon name={"chevron " + chevron} />
-              ) : null}
-            </Button>
-          );
-        })}
+      <div>
+        <Button.Group className="sortControls" basic>
+          {sortings.map(i => {
+            const upChevron = sortOrder === i.field;
+            const downChevron = sortOrder === `-${i.field}`;
+            const chevron = upChevron ? "up" : "down";
+            return (
+              <Button
+                active={upChevron || downChevron}
+                onClick={() => this.changeSorting(i.field)}
+                className="sortingButton"
+                key={i.field}
+                size="mini"
+                compact
+              >
+                {i.title}
+                {upChevron || downChevron ? (
+                  <Icon name={"chevron " + chevron} />
+                ) : null}
+              </Button>
+            );
+          })}
+        </Button.Group>
       </div>
     );
   }
