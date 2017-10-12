@@ -33,7 +33,10 @@ export class PostForm extends Component {
       text: name
     }));
     const isEditMode = !!this.props.id;
-    let { author, title, body, category } = { ...this.props, ...this.state };
+    let { author = "", title = "", body = "", category } = {
+      ...this.props,
+      ...this.state
+    };
     category = category || this.getDefaultCategory();
     const onChange = this.onChange;
     return (
@@ -44,6 +47,8 @@ export class PostForm extends Component {
             placeholder="Author"
             disabled={isEditMode}
             value={author}
+            required
+            minLength={3}
             onChange={onChange("author")}
           />
         </Form.Field>
@@ -54,6 +59,7 @@ export class PostForm extends Component {
             value={category}
             placeholder="Select category"
             options={categories}
+            required
             onChange={onChange("category")}
           />
         </Form.Field>
@@ -62,12 +68,19 @@ export class PostForm extends Component {
           <input
             placeholder="Title"
             value={title}
+            required
+            minLength={3}
             onChange={onChange("title")}
           />
         </Form.Field>
         <Form.Field>
           <label>Post</label>
-          <textarea name="body" value={body} onChange={onChange("body")} />
+          <textarea
+            name="body"
+            required
+            value={body}
+            onChange={onChange("body")}
+          />
         </Form.Field>
         <Button>{isEditMode ? "Save" : "Post"}</Button>
       </Form>
