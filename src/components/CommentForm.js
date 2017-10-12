@@ -30,6 +30,7 @@ class CommentForm extends Component {
             value={author}
             disabled={!!id}
             required
+            minLength={3}
             onChange={this.onChange("author")}
           />
         </Form.Field>
