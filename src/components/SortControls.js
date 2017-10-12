@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
+import { bindActionCreators } from "redux";
 
 import { setSortOrder } from "../actions/sortOrder";
 import "./SortControls.css";
@@ -26,7 +27,7 @@ class SortControls extends Component {
       }
     }
 
-    this.props.dispatch(setSortOrder(order));
+    this.props.setSortOrder(order);
   };
   render() {
     const { sortOrder } = this.props;
@@ -66,4 +67,12 @@ const mapStateToProps = ({ sortOrder }) => {
   };
 };
 
-export default connect(mapStateToProps)(SortControls);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setSortOrder
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(SortControls);

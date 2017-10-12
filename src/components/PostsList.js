@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Card } from "semantic-ui-react";
+import { bindActionCreators } from "redux";
 
 import { fetchPosts, votePost, deletePost } from "../actions/posts";
 import PostListItem from "./PostListItem";
@@ -9,7 +10,7 @@ import sortBy from "../utils/sortBy";
 
 class PostsList extends Component {
   fetchCategoryPosts(props = this.props) {
-    this.props.dispatch(fetchPosts(props.category));
+    this.props.fetchPosts(props.category);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.category !== this.props.category) {
@@ -21,7 +22,7 @@ class PostsList extends Component {
   }
 
   voteAction = (postId, delta) => {
-    this.props.dispatch(votePost({ postId, delta }));
+    this.props.votePost({ postId, delta });
   };
 
   editPost = post => {
@@ -30,7 +31,7 @@ class PostsList extends Component {
 
   deletePost = postId => {
     window.confirm("Are you sure you want to remove the post?") &&
-      this.props.dispatch(deletePost(postId));
+      this.props.deletePost(postId);
   };
 
   render() {
@@ -59,4 +60,16 @@ const mapStateToProps = ({ posts, comments, sortOrder }) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(PostsList));
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchPosts,
+      votePost,
+      deletePost
+    },
+    dispatch
+  );
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PostsList)
+);

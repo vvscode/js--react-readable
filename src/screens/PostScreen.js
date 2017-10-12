@@ -13,6 +13,7 @@ import {
 } from "../actions/comments";
 import CommentsList from "../components/CommentsList";
 import CommentForm from "../components/CommentForm";
+import { bindActionCreators } from "redux";
 
 import "./PostScreen.css";
 
@@ -23,49 +24,45 @@ class PostScreen extends Component {
   };
   componentWillMount() {
     const { postId } = this.props.match.params;
-    this.props.dispatch(fetchPost(postId));
-    this.props.dispatch(fetchCommentsByPostid(postId));
+    this.props.fetchPost(postId);
+    this.props.fetchCommentsByPostid(postId);
   }
 
   onCommentSubmit = commentData => {
     commentData.body &&
-      this.props.dispatch(
-        addComment({
-          postId: this.props.match.params.postId,
-          ...commentData
-        })
-      );
+      this.props.addComment({
+        postId: this.props.match.params.postId,
+        ...commentData
+      });
   };
 
   onCommentUpdate = ({ body }) => {
     if (!body) {
       return;
     }
-    this.props.dispatch(
-      updateComment({
-        commentId: this.state.commentToEdit.id,
-        body
-      })
-    );
+    this.props.updateComment({
+      commentId: this.state.commentToEdit.id,
+      body
+    });
     this.closeCommentModal();
   };
 
   voteAction = delta => {
     const postId = this.props.post.id;
-    this.props.dispatch(votePost({ postId, delta }));
+    this.props.votePost({ postId, delta });
   };
 
   voteComment = (commentId, delta) => {
-    this.props.dispatch(voteComment({ commentId, delta }));
+    this.props.voteComment({ commentId, delta });
   };
 
   removeComment = commentId => {
-    this.props.dispatch(deleteComment(commentId));
+    this.props.deleteComment(commentId);
   };
 
   deletePost = () => {
     if (window.confirm("Are you sure you want to delete post?")) {
-      this.props.dispatch(deletePost(this.props.post.id));
+      this.props.deletePost(this.props.post.id);
       this.props.history.push(`/${this.props.post.category}`);
     }
   };
@@ -157,4 +154,19 @@ const mapStateToProps = ({ posts, activePost, comments }) => {
   };
 };
 
-export default connect(mapStateToProps)(PostScreen);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchPost,
+      votePost,
+      deletePost,
+      voteComment,
+      fetchCommentsByPostid,
+      addComment,
+      updateComment,
+      deleteComment
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);

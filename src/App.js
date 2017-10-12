@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import "semantic-ui-css/semantic.min.css";
@@ -15,7 +16,7 @@ import { fetchCategories } from "./actions/categories";
 
 export class App extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchCategories());
+    this.props.fetchCategories();
   }
 
   render() {
@@ -38,4 +39,12 @@ export class App extends Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchCategories
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
