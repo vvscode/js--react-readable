@@ -11,6 +11,7 @@ import CategoryScreen from "./screens/CategoryScreen";
 import PostScreen from "./screens/PostScreen";
 import PostEditScreen from "./screens/PostEditScreen";
 import PostAddScreen from "./screens/PostAddScreen";
+import NotFound from "./screens/NotFound";
 import Header from "./components/Header";
 import { fetchCategories } from "./actions/categories";
 
@@ -25,6 +26,7 @@ export class App extends Component {
         <div className="App">
           <Header />
           <Switch>
+            <Route exact path="/404" component={NotFound} />
             <Route exact path="/" component={HomeScreen} />
             <Route exact path="/:category" component={CategoryScreen} />
             <Route exact path="/post/new" component={PostAddScreen} />

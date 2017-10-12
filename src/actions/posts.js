@@ -24,7 +24,7 @@ export const fetchPosts = (category = null) => dispatch => {
 
 export const fetchPost = id => dispatch => {
   fetchCommentsByPostid(id)(dispatch);
-  api.fetchPost(id).then(post =>
+  return api.fetchPost(id).then(post =>
     dispatch({
       type: POSTS_FETCH_POST,
       post

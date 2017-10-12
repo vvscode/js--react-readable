@@ -8,16 +8,24 @@ const headers = {
 
 const getUrl = link => `${BASE_URL}${link}`;
 
+const processResponse = resp =>
+  resp.json().then(data => {
+    if (data.error) {
+      return Promise.reject(data);
+    }
+    return data;
+  });
+
 export const fetchCategories = () =>
-  fetch(getUrl("/categories"), { headers }).then(resp => resp.json());
+  fetch(getUrl("/categories"), { headers }).then(processResponse);
 
 export const fetchPosts = (category = null) => {
   const url = category ? `/${category}/posts` : "/posts";
-  return fetch(getUrl(url), { headers }).then(resp => resp.json());
+  return fetch(getUrl(url), { headers }).then(processResponse);
 };
 
 export const fetchPost = id =>
-  fetch(getUrl(`/posts/${id}`), { headers }).then(resp => resp.json());
+  fetch(getUrl(`/posts/${id}`), { headers }).then(processResponse);
 
 export const addPost = ({
   id = uuid(),
@@ -38,10 +46,10 @@ export const addPost = ({
       author,
       category
     })
-  }).then(resp => resp.json());
+  }).then(processResponse);
 
 export const fetchCommentsByPostid = id =>
-  fetch(getUrl(`/posts/${id}/comments`), { headers }).then(resp => resp.json());
+  fetch(getUrl(`/posts/${id}/comments`), { headers }).then(processResponse);
 
 export const addComment = ({ postId, author, body }) =>
   fetch(getUrl("/comments"), {
@@ -54,7 +62,7 @@ export const addComment = ({ postId, author, body }) =>
       author,
       body
     })
-  }).then(resp => resp.json());
+  }).then(processResponse);
 
 export const votePost = ({ postId, delta }) => {
   let option = +delta > 0 ? "upVote" : "downVote";
@@ -62,7 +70,7 @@ export const votePost = ({ postId, delta }) => {
     method: "POST",
     headers,
     body: JSON.stringify({ option })
-  }).then(resp => resp.json());
+  }).then(processResponse);
 };
 
 export const updatePost = ({ postId, title, body }) =>
@@ -70,13 +78,13 @@ export const updatePost = ({ postId, title, body }) =>
     method: "PUT",
     headers,
     body: JSON.stringify({ title, body })
-  }).then(resp => resp.json());
+  }).then(processResponse);
 
 export const deletePost = postId =>
   fetch(getUrl(`/posts/${postId}`), {
     method: "DELETE",
     headers
-  }).then(resp => resp.json());
+  }).then(processResponse);
 
 export const voteComment = ({ commentId, delta }) => {
   let option = +delta > 0 ? "upVote" : "downVote";
@@ -84,7 +92,7 @@ export const voteComment = ({ commentId, delta }) => {
     method: "POST",
     headers,
     body: JSON.stringify({ option })
-  }).then(resp => resp.json());
+  }).then(processResponse);
 };
 
 export const updateComment = ({ commentId, body }) =>
@@ -92,10 +100,10 @@ export const updateComment = ({ commentId, body }) =>
     method: "PUT",
     headers,
     body: JSON.stringify({ timestamp: Date.now(), body })
-  }).then(resp => resp.json());
+  }).then(processResponse);
 
 export const deleteComment = commentId =>
   fetch(getUrl(`/comments/${commentId}`), {
     method: "DELETE",
     headers
-  }).then(resp => resp.json());
+  }).then(processResponse);

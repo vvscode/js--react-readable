@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Container, Divider, Header, Icon, Modal } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import { fetchPost, votePost, deletePost } from "../actions/posts";
 import { voteComment } from "../actions/comments";
@@ -24,7 +25,7 @@ class PostScreen extends Component {
   };
   componentWillMount() {
     const { postId } = this.props.match.params;
-    this.props.fetchPost(postId);
+    this.props.fetchPost(postId).catch(() => this.props.history.push("/404"));
     this.props.fetchCommentsByPostid(postId);
   }
 
@@ -80,6 +81,14 @@ class PostScreen extends Component {
     });
 
   render() {
+    return this.props.post ? this.renderPost() : this.renderNotFound();
+  }
+
+  renderNotFound() {
+    return <h1>No Such Post</h1>;
+  }
+
+  renderPost() {
     const { post, comments } = this.props;
     return (
       <div>
@@ -169,4 +178,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PostScreen)
+);
