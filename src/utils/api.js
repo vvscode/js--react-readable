@@ -13,6 +13,12 @@ const processResponse = resp =>
     if (data.error) {
       return Promise.reject(data);
     }
+    if (!Array.isArray(data) && data instanceof Object && !data.id) {
+      return Promise.reject({
+        error: "No data",
+        data
+      });
+    }
     return data;
   });
 
