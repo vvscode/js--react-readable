@@ -13,7 +13,8 @@ const processResponse = resp =>
     if (data.error) {
       return Promise.reject(data);
     }
-    if (!Array.isArray(data) && data instanceof Object && !data.id) {
+    // empty object means that there were no data found
+    if (!Array.isArray(data) && !Object.keys(data).length) {
       return Promise.reject({
         error: "No data",
         data
